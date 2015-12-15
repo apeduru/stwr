@@ -1,0 +1,2 @@
+# stwr
+Star Wars CLI
