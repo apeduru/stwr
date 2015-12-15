@@ -1,0 +1,146 @@
+#!/usr/bin/python3
+
+import argparse
+import textwrap
+import random
+import sys
+
+
+def usage():
+    return """ stwr [-vta]
+
+        8888888888  888    88888
+       88     88   88 88   88  88
+        8888  88  88   88  88888
+           88 88 888888888 88   88
+    88888888  88 88     88 88    888888
+
+    88  88  88   888    88888    888888
+    88  88  88  88 88   88  88  88
+    88 8888 88 88   88  88888    8888
+     888  888 888888888 88   88     88
+      88  88  88     88 88    8888888
+
+         8888888  88      888888
+         88       88        88
+         88       88        88
+         88       88        88
+         88       88        88
+         8888888  8888888 888888"""
+
+
+def quotes(character, index):
+    q = {
+        'vader': [
+            "I am your father.", "I find your lack of faith disturbing.",
+            "The force is strong with this one.",
+            "NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!",
+            "Join me, and together, we can rule the galaxy as father and son."
+        ],
+        'threepio': [
+            "Hello, I am C-3PO, human-cyborg relations.",
+            "R2-D2, where are you?", "R2-D2, is it you, It Is You!",
+            "Sir, the possibility of successfully navigating an asteroid field is approximately three thousand seven hundred and twenty to one!",
+            "Don't worry wbout Master Luke. I'm sure he'll be all right. He's quite clever, you know... for a human being."
+        ],
+        'artoo': ["Boop", "Bleep bloop beep boop", "Bleep bloop bleep beep", "Bleep boop beep beep boop beep", "Beep boop beep boop"]
+    }
+
+    return q[character][index]
+
+
+def build_textbox(quote):
+    textbox = []
+    lines = textwrap.wrap(quote, 50)
+    max_length = len(max(lines, key=len))
+    lines = [line.ljust(max_length) for line in lines]
+
+    border = len(lines[0])
+    textbox.append(" " + "-" * (border+2) + " ")
+    for line in lines:
+        textbox.append("| " + line + " |")
+    textbox.append(" " + "-" * (border+2) + " ")
+    textbox = "\n".join(textbox)
+
+    return textbox
+
+
+def characters(p):
+    # adding 'r' before each character makes raw strings, prevents eol errors
+    c = {
+        'vader':
+            r"""
+                 \     __
+                  \   /~~\
+                   \ |<><>|
+                     /_/\_\
+                    /\____/\
+                   //| [ ]|\\
+                  // | [_]| \\
+                  \\ |    | //
+                   \#|====|#/
+                    /|\  /|\
+                   / | || | \
+                  /  | || |  \
+                 /   | || |   \
+                /    | || |    \ """,
+
+        'artoo':
+            r"""
+                \
+                 \   _____
+                  \ /     \
+                    | ()  |
+                   _|_____|_
+                  | | === | |
+                  |_|  o  |_|
+                   ||  o  ||
+                   ||__*__||
+                  |~ \___/ ~|
+                  /=\ /=\ /=\
+                  [_] [_] [_] """,
+
+        'threepio':
+            r"""
+                \
+                 \   /~\
+                  \ (o o)
+                    _\=/_
+                   /  _  \
+                  //\/.\/\\
+                 ||  \_/  ||
+                 || |\ /| ||
+                 #  \_ _/ #
+                    | | |
+                    | | |
+                    []|[]
+                    | | |
+                   /_] [_\
+            """
+        }
+
+    return c[p]
+
+def main():
+    parser = argparse.ArgumentParser(usage=usage())
+    parser.add_argument('-v', '--vader', help='Darth Vader quote', action='store_true')
+    parser.add_argument('-t', '--threepio', help='C-3PO quote', action='store_true')
+    parser.add_argument('-a', '--artoo', help='R2-D2 quote', action='store_true')
+
+    args = vars(parser.parse_args())
+
+    if len(sys.argv) == 1 or len(sys.argv) > 2:
+        parser.print_help()
+        sys.exit(1)
+
+    number = random.randint(0, 4)
+    name = list(filter(args.get, args))[0]
+
+    quote = quotes(name, number)
+    quote = build_textbox(quote)
+    print(quote)
+    print(characters(name))
+
+if __name__ == '__main__':
+    main()
+    sys.exit(0)
