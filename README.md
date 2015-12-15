@@ -3,6 +3,8 @@ Inspired by [cowsay](https://wikipedia.org/wiki/Cowsay) and the forthcoming
 trilogy, stwr is a fun CLI generating ASCII pictures of Star Wars charcters 
 and a *famous* quote.
 
+![screenshot](stwr.png)
+
 ## Requirements
 Python 3
 
