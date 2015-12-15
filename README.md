@@ -7,9 +7,11 @@ and a *famous* quote.
 Python 3
 
 ## Installation
-Clone this repo, cd stwr
+Clone this repo, then `cd stwr`
+
 Change permissions of the executable with `chmod +x stwr`
-Put the file your `$PATH`, usually this is `/usr/bin/` or `usr/local/bin`
+
+Move the file to your `$PATH`, usually this is `/usr/bin/` or `usr/local/bin`
 
 ## Usage
 Type `stwr` to see the full list of options
